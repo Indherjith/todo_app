@@ -1,0 +1,98 @@
+
+.container > h1 {
+    text-align: center;
+}
+
+
+.change, .todo{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 4%;
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.todo{
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.change > input, .todo > input{
+    font-size: 1.5rem;
+    margin: auto;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+.change > span , .todo > span{
+    font-size: 1rem;
+    color: teal;
+}
+
+.change > button, .todo > button{
+    padding: 5px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: blue;
+    margin-top: 5%;
+}
+
+.todo > a{
+    margin: 30px 0 0 0;
+}
+
+.listItem{
+    box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: grid;
+    grid-template-columns: calc(100% - 300px) 300px;
+    width: 70%;
+    margin: auto;
+    align-items: center;
+    padding: 20px;
+}
+
+.listItem > div >p{
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.listItem > div > button{
+    padding: 5px 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: blue;
+    cursor: pointer;
+}
+
+.listItem > div:nth-child(2){
+    display: flex;
+    justify-content: space-between;
+}
+
+.list{
+    margin-top: 15vh;
+}
+
+
+@media all and (max-width:496px) {
+    .listItem{
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .listItem > div > button{
+        font-size: 0.8rem;
+    }
+    .change , .todo{
+        width: calc(80% - 5px);
+    }
+}
+
+

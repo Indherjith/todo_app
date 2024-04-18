@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TODO APP</h1>
+        <div class="todo">
+                <span>Enter Todo</span>
+                <input type="text" id="todo">
+                <button id="submit" onclick="handlesubmit()">Submit</button>
+                <a href="./List.html">Show list</a>
+        </div>
+    </div>
+</body>
+<script>
+    const handlesubmit=()=>{
+        const data = document.getElementById("todo").value;
+        if(data === " " || data == ""){
+            alert("Input field is empty");
+            window.location.reload();
+            return;
+        }
+        else{
+            const todos = JSON.parse(localStorage.getItem("todos")) || [];
+            let newdata = {status:"pending",todo:data,id:Date.now()};
+            console.log(newdata);
+            try{
+                todos.push(newdata);
+                localStorage.setItem("todos",JSON.stringify(todos));
+                alert("Todo Added Successfully!");
+            }
+            catch(err){
+                alert("Please Try Again!");
+            }
+        }
+    }
+</script>
+</html>

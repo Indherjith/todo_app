@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="list">
+
+        </div>
+    </div>
+</body>
+<script>
+    const data = JSON.parse(localStorage.getItem("todos")) || [];
+    // console.log(data.length == 0);
+    if(data.length == 0){
+        let h1tag = document.createElement("h1");
+        h1tag.innerHTML = "No Data Available!";
+        h1tag.style.position = "absolute";
+        h1tag.style.top = "40%"
+        h1tag.style.left = "50%"
+        h1tag.style.transform = "translate(-50%,-50%)"
+        document.getElementsByClassName("container")[0].append(h1tag)
+    }
+    else{
+    const edit=(elem)=>{
+        var item = elem;
+        let div1 = document.createElement("div");
+        let inp1 = document.createElement("input");
+        let inp2 = document.createElement("input");
+        let span1 = document.createElement("span");
+        let span2 = document.createElement("span");
+        let btn_change = document.createElement("button");
+        inp1.value = elem.todo;
+        inp1.id = "inp1"
+        inp2.value = elem.status;
+        span1.innerText = "TODO";
+        span2.innerText = "STATUS";
+        inp2.disabled = true;
+        btn_change.innerText = "Change Todo"
+        btn_change.addEventListener("click",function(){
+            console.log(item);
+            const data = JSON.parse(localStorage.getItem("todos"));
+            let newtodos = data.filter(elem=>(item.id !== elem.id));
+            let new_Item = {"todo":document.getElementById("inp1").value,"status":"pending","id":Date.now()};
+            
+            newtodos.push(new_Item)
+            localStorage.setItem("todos",JSON.stringify(newtodos))
+            alert("Todo Content Changed")
+            window.location.reload();
+        })
+
+        div1.style.position = "absolute";
+        div1.style.top = "50%";
+        div1.style.left = "50%";
+        div1.style.transform = "translate(-50%,-50%)";
+        div1.style.zIndex = "2";
+        div1.className = "change"
+
+        div1.append(span1,inp1,span2,inp2,btn_change)      
+        document.getElementsByTagName("body")[0].append(div1);
+    }
+    const delet=(item)=>{
+        let newData = JSON.parse(localStorage.getItem("todos"));
+        newData = newData.filter(elem=>(elem.id !== item.id))
+        localStorage.setItem("todos",JSON.stringify(newData));
+        alert("Item deleted Successfully")
+        window.location.reload();
+    }
+
+    const toggle=(elem)=>{
+        let newData = data.filter(item=>(item.id !== elem.id));
+        if(elem.status === "pending"){
+            let newitem = {...elem,status:"completed" }
+            newData.push(newitem);
+            localStorage.setItem("todos",JSON.stringify(newData));
+            alert("Status Updated Successfully!");
+            window.location.reload();
+        }
+        else{
+            let newitem = {...elem,status:"pending" }
+            newData.push(newitem);
+            localStorage.setItem("todos",JSON.stringify(newData));
+            alert("Status Updated Successfully!");
+            window.location.reload();
+        }
+    }
+
+    
+    data.map(item=>{
+        let divItem = document.createElement("div");
+        let divItem1 = document.createElement("div");
+        let divItem2 = document.createElement("div");
+        let ptodo = document.createElement("p");
+        let pstatus = document.createElement("p");
+        let togglebtn = document.createElement("button");
+        let editbtn = document.createElement("button");
+        let delbtn = document.createElement("button");
+
+        ptodo.innerText = item.todo;
+        pstatus.innerText = item.status;
+        pstatus.style.color = "teal";
+        if(item.status === "pending"){
+            togglebtn.innerText = "Make Completed"
+        }
+        else{
+            togglebtn.innerText = "Make Pending"
+        }
+
+        togglebtn.onclick = function(){
+            toggle(item);
+        }
+
+        editbtn.innerText = "Edit Todo";
+        editbtn.onclick = function(){
+            edit(item);
+        }
+
+        delbtn.innerText = "Delete";
+        delbtn.onclick = function(){
+            delet(item);
+        }
+
+
+        divItem.id = item.id;
+        divItem.className = "listItem"
+        divItem1.style.display = "flex";
+        divItem1.style.alignItems = "center";
+        divItem2.style.alignItems = "center";
+        divItem1.style.gap = "20px";
+    
+        divItem1.append(ptodo,pstatus);
+        divItem2.append(togglebtn,editbtn,delbtn)
+        divItem.append(divItem1,divItem2);
+        document.getElementsByClassName("list")[0].append(divItem)
+    })
+    }
+    
+</script>
+</html>
